@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    tags: [ v*.*.* ]
+    tags: [ release/* ]
   pull_request:
-    tags: [ v*.*.* ]
+    tags: [ release/* ]
 
 jobs:
   build:
