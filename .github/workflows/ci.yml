@@ -16,7 +16,12 @@ jobs:
           node-version: '12'
       # Runs a single command using the runners shell
       - name: Build
-        run: npm run build:prod
+        run: |
+          npm install
+          npm run build:prod
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('**/package-lock.json') }}
 
       # Runs a set of commands using the runners shell
       - name: Publish
