@@ -3,8 +3,6 @@ name: CI
 on:
   push:
     tags: [ release/* ]
-  pull_request:
-    tags: [ release/* ]
 
 jobs:
   build:
