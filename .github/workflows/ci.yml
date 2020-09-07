@@ -42,7 +42,6 @@ jobs:
           registry: ${{ secrets.DOCKER_REGISTRY }}
           password: ${{ secrets.DOCKER_PWD }}
         run: |
-          ls -l
           IMAGE_TAG=${GITHUB_REF##*/}
           IMAGE=registry.cn-shenzhen.aliyuncs.com/zdhd-project/pigeon-admin
           docker build --tag $IMAGE:latest --tag $IMAGE:$IMAGE_TAG .
