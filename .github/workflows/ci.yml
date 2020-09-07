@@ -23,7 +23,9 @@ jobs:
         run: |
           npm install
           npm run build:prod
-
+  publish:
+    runs-on: ubuntu-latest
+    steps:
       - uses: azure/docker-login@v1
         with:
           username: ${{ secrets.DOCKER_USER }}
