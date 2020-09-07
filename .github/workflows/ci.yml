@@ -2,7 +2,9 @@ name: CI
 
 on:
   push:
-    tags: [ release/* ]
+    branches:
+      - 'release/**'
+    tags: [ release/** ]
 
 jobs:
   build:
