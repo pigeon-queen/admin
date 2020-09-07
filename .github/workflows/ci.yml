@@ -35,7 +35,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: release
-      - uses: azure/dockerc-login@v1
+      - name: Docker login
+        uses: azure/docker-login@v1
         with:
           username: ${{ secrets.DOCKER_USER }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
