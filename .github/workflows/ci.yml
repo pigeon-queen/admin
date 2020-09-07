@@ -36,7 +36,7 @@ jobs:
       - uses: azure/docker-login@v1
         with:
           username: ${{ secrets.DOCKER_USER }}
-          registry: ${{ secrets.DOCKER_REGISTRY }}
+          login-server: ${{ secrets.DOCKER_REGISTRY }}
           password: ${{ secrets.DOCKER_PWD }}
       - name: Publish
         run: |
