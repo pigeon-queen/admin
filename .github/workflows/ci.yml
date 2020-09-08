@@ -47,4 +47,4 @@ jobs:
           docker push $IMAGE:latest
       - name: Deploy
         run: |
-          curl "http://120.79.42.184:8181?type=compose&dir=/root/runners/pigeon&token=${DEPLOY_TOKEN}&service=app"
+          curl "http://120.79.42.184:8181?type=compose&dir=/root/runners/pigeon&token=${DEPLOY_TOKEN}&service=admin"
