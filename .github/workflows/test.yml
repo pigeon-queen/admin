@@ -4,9 +4,10 @@ on:
   push:
     branches:
       - test
+      -
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: test env
-        runs: env
+        run: env
