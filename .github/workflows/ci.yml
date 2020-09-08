@@ -43,8 +43,6 @@ jobs:
           password: ${{ secrets.DOCKER_PWD }}
       - name: Publish
         run: |
-          IMAGE_TAG=${GITHUB_REF##*/}
           IMAGE=registry.cn-shenzhen.aliyuncs.com/zdhd-project/pigeon-admin
-          docker build --tag $IMAGE:latest --tag $IMAGE:$IMAGE_TAG .
+          docker build --tag $IMAGE:latest .
           docker push $IMAGE:latest
-          docker push $IMAGE:$IMAGE_TAG
