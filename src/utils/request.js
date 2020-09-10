@@ -45,7 +45,7 @@ service.interceptors.response.use(
   undefined,
   error => {
     console.error(error)
-    if (error.response)   {
+    if (error.response) {
       var res = error.response.data
       if (res.code === 401) {
         // to re-login
@@ -60,7 +60,6 @@ service.interceptors.response.use(
         })
       }
     }
-
 
     Message({
       message: error.response?.data?.message || error.message,

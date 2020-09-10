@@ -4,6 +4,10 @@
 
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
 
+    <el-row >
+      <quill></quill>
+    </el-row>
+
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart :chart-data="lineChartData" />
     </el-row>
@@ -49,6 +53,7 @@ import PieChart from './components/PieChart'
 import BarChart from './components/BarChart'
 import TransactionTable from './components/TransactionTable'
 import TodoList from './components/TodoList'
+import Quill from '@/components/Editor/quill'
 import BoxCard from './components/BoxCard'
 
 const lineChartData = {
@@ -81,6 +86,7 @@ export default {
     BarChart,
     TransactionTable,
     TodoList,
+    Quill,
     BoxCard
   },
   data() {
