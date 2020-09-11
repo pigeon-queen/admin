@@ -1,20 +1,13 @@
-import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
-// create an axios instance
-const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-  // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
-})
-
 // request interceptor
-service.interceptors.request.use(
+axios.interceptors.request.use(
   config => {
     // do something before request is sent
-
+    config.baseURL =  process.env.VUE_APP_BASE_API
+    config.timeout = 5000
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
@@ -31,7 +24,7 @@ service.interceptors.request.use(
 )
 
 // response interceptor
-service.interceptors.response.use(
+axios.interceptors.response.use(
   /**
    * If you want to get http information such as headers or status
    * Please return  response => response
@@ -70,4 +63,4 @@ service.interceptors.response.use(
   }
 )
 
-export default service
+export default axios

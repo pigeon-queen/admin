@@ -1,6 +1,6 @@
 <template>
-  <quill-editor ref="editor" v-model="contentValue"  :options="editor.options">
-    <div slot="toolbar" id="editor-toolbar">
+  <quill-editor ref="editor" v-model="contentValue"  :options="options">
+    <div slot="toolbar" :id="editorToolbar">
       <span class="ql-formats">
         <select class="ql-header">
         <option value="1">一级标题</option>
@@ -63,16 +63,18 @@
         <button type="button" class="ql-image">
         </button>
         <input accept="image/*" type="file" style="display: none;" ref="upload" @change="upload">
-          <v-progress-circular
+          <el-progress
             :size="26"
             :width="5"
             :rotate="-90"
             color="lime"
             class="progress"
-            :value="imgProgress"
+            :percentage="imgProgress"
             v-if="imgUploading"
+            type="circle"
+            :show-text="false"
           >
-          </v-progress-circular>
+          </el-progress>
       </span>
     </div>
   </quill-editor>
@@ -80,8 +82,14 @@
 
 <script>
   import {quillEditor} from 'vue-quill-editor'
-  import editor from './editor';
   import { upload, UploadFile } from 'nerio-uploader'
+  import { functions } from 'nerio-js-utils'
+  import ImageResize from '@/lib/quill-image-resize/src/ImageResize'
+
+  Quill.register('modules/imageResize', ImageResize)
+
+  const {fastRandom} = functions
+
   export default {
     name      : 'quill',
     props     : {
@@ -93,7 +101,6 @@
     },
     data() {
       return {
-        editor,
         uploadDriver : process.env.VUE_APP_UPLOAD_DRIVER || 'oss',
         quill: null,
         imgProgress: -1,
@@ -154,6 +161,20 @@
       },
       imgUploading(){
         return this.imgProgress > -1 && this.imgProgress < 100
+      },
+      editorToolbar(){
+        return 'editor-toolbar-' + fastRandom()
+      },
+      options() {
+        return {
+          modules: {
+            toolbar: '#' + this.editorToolbar,
+            imageResize : {
+              modules : ['Resize', 'DisplaySize']
+            }
+          },
+          placeholder: '请输入内容'
+        }
       }
     },
   };

@@ -84,41 +84,54 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/documentation',
+    path: '/sellers',
     component: Layout,
+    redirect: '/sellers/index',
+    meta: { title: '鸽舍管理', icon: 'el-icon-s-home', affix: true },
     children: [
       {
         path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: 'Documentation', icon: 'documentation', affix: true }
+        component: () => import('@/views/sellers/index'),
+        name: 'sellers',
+        meta: { title: '鸽舍列表'}
+      },
+      {
+        path: 'write/:id',
+        component: () => import('@/views/sellers/write/'),
+        meta: { title: '编辑鸽舍'},
+        hidden: true
+      },
+      {
+        path: 'write',
+        component: () => import('@/views/sellers/write/'),
+        meta: { title: '添加鸽舍'},
+        hidden: true
       }
     ]
   },
   {
-    path: '/guide',
+    path: '/pigeons',
     component: Layout,
-    redirect: '/guide/index',
+    redirect: '/pigeons/index',
+    meta: { title: '鸽子管理', icon: 'el-icon-s-promotion', affix: true },
     children: [
       {
         path: 'index',
-        component: () => import('@/views/guide/index'),
-        name: 'Guide',
-        meta: { title: 'Guide', icon: 'guide', noCache: true }
-      }
-    ]
-  },
-  {
-    path: '/profile',
-    component: Layout,
-    redirect: '/profile/index',
-    hidden: true,
-    children: [
+        component: () => import('@/views/pigeons/index'),
+        name: 'pigeons',
+        meta: { title: '鸽子列表'}
+      },
       {
-        path: 'index',
-        component: () => import('@/views/profile/index'),
-        name: 'Profile',
-        meta: { title: 'Profile', icon: 'user', noCache: true }
+        path: 'write/:id',
+        component: () => import('@/views/pigeons/write/'),
+        meta: { title: '编辑鸽子'},
+        hidden: true
+      },
+      {
+        path: 'write',
+        component: () => import('@/views/pigeons/write/'),
+        meta: { title: '添加鸽子'},
+        hidden: true
       }
     ]
   }
