@@ -18,6 +18,14 @@ export function write(data) {
   })
 }
 
+export function edit(id, data) {
+  return request({
+    url: '/pigeons/'+id,
+    method: 'PUT',
+    data
+  })
+}
+
 export function detail(id) {
 
   return request({

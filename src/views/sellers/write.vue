@@ -9,6 +9,9 @@
         <el-form-item label="名称" prop="name">
           <el-input v-model="post.name" style="width: 50%"></el-input>
         </el-form-item>
+        <el-form-item label="图片*">
+          <image-upload v-model="post.main_image"></image-upload>
+        </el-form-item>
         <el-form-item label="简介" style="width: 85%" class="post-summary" prop="summary">
           <quill v-model="post.summary"></quill>
         </el-form-item>
@@ -30,10 +33,11 @@ import Quill from "@/components/Editor/quill";
 
 import {write, detail} from '@/api/seller'
 import {Message} from "element-ui";
+import ImageUpload from "@/components/Uploads/Image";
 
 export default {
   name: "write",
-  components: {Quill},
+  components: {ImageUpload, Quill},
   data() {
     return {
       post : {

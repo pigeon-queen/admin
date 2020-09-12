@@ -1,5 +1,5 @@
 module.exports = {
-  title: '拍卖网站管理后台',
+  title: '信鸽网站管理后台',
 
   /**
    * @type {boolean} true | false
