@@ -130,7 +130,7 @@
               }
               return true;
             },
-            stsUrl: process.env.VUE_APP_BASE_API + '/oss/sts',
+            stsUrl: '/oss/sts',
             progress: percent => {
               console.log(this.imgProgress = percent)
             },
