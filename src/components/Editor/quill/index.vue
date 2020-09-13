@@ -117,7 +117,6 @@
       },
       upload (e) {
         let file = e.target.files[0]
-
         if (file)  {
           upload(file, this.uploadDriver, {
             validate:(uploadFile) => {
