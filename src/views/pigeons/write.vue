@@ -7,7 +7,7 @@
             <span>{{ this.id ? '编辑': '添加' }}鸽子</span>
             <el-button style="float: right; padding: 3px 0" type="text" @click="back">返回</el-button>
           </div>
-          <el-form ref="form" :model="post"  label-width="64px" >
+          <el-form ref="form" :model="post"  label-width="72px" >
             <h3 style="text-align: center">基本信息</h3>
             <el-form-item label="编号*">
               <el-input v-model="post.sn" style="width: 50%"></el-input>
@@ -38,7 +38,7 @@
             </el-form-item>
             <el-row :gutter="0" style="margin-top: 10px">
               <el-col :span="8">
-                <el-form-item label="图片*">
+                <el-form-item label="图片*"  label-width="72px">
                   <image-upload v-model="post.main_image"></image-upload>
                 </el-form-item>
               </el-col>
@@ -50,6 +50,11 @@
               <el-col :span="8">
                 <el-form-item label="血统书（中文）" label-width="128px">
                   <image-upload v-model="post.lineage_cn_image"></image-upload>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="眼睛图片" label-width="72px">
+                  <image-upload v-model="post.eye_image"></image-upload>
                 </el-form-item>
               </el-col>
             </el-row>

@@ -1,17 +1,16 @@
 <template>
   <div class="dashboard-container">
-    <component :is="currentRole" />
+    <admin-dashboard/>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import adminDashboard from './admin'
-import editorDashboard from './editor'
 
 export default {
   name: 'Dashboard',
-  components: { adminDashboard, editorDashboard },
+  components: { adminDashboard },
   data() {
     return {
       currentRole: 'adminDashboard'
@@ -29,3 +28,11 @@ export default {
   }
 }
 </script>
+
+<style scoped type="text/css">
+.dashboard-container
+{
+  height: calc(100vh - 50px);
+}
+
+</style>

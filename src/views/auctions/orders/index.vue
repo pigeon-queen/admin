@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>鸽子列表</span>
+        <span>拍卖订单列表</span>
         <el-button style="float: right; padding: 3px 0" type="text" @click="jumpWrite()">添加</el-button>
       </div>
       <el-table :data="list" style="width: 100%" :row-class-name="tableRowClassName" border>
@@ -36,7 +36,7 @@
     </el-card>
     <el-dialog :visible.sync="dialog" >
       <template slot="title">
-        <div style="font-size: 18px;padding-right: 20px">{{ detail.name }}</div>
+        <div style="font-size: 26px">{{ detail.name }}</div>
         <small style="color: grey">{{detail.sn}}</small>
       </template>
       <small v-html="detail.summary"></small>
@@ -137,7 +137,7 @@
 import {pigeons, detail, edit} from '@/api/pigeon'
 
 export default {
-  name: "Pigeons",
+  name: "Sellers",
   methods: {
     tableRowClassName({ row, rowIndex }) {
       if (rowIndex === 1) {
@@ -157,7 +157,7 @@ export default {
       })
     },
     jumpWrite(id = ''){
-      this.$router.push(`/pigeons/write/${id}`)
+      this.$router.push(`/auctions/write/${id}`)
     },
     loadData(params = {}){
       pigeons(params).then(res => {

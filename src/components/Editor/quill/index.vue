@@ -85,6 +85,7 @@
   import { upload, UploadFile } from 'nerio-uploader'
   import { functions } from 'nerio-js-utils'
   import ImageResize from '@/lib/quill-image-resize/src/ImageResize'
+  import Quill from 'quill'
 
   Quill.register('modules/imageResize', ImageResize)
 
