@@ -164,6 +164,58 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/articles',
+    component: Layout,
+    redirect: '/articles/index',
+    meta: { title: '新闻赛事管理', icon: 'el-icon-news' },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/articles/index'),
+        name: 'articles',
+        meta: { title: '新闻赛事列表'}
+      },
+      {
+        path: 'write/:id',
+        component: () => import('@/views/articles/write'),
+        meta: { title: '编辑新闻赛事'},
+        hidden: true
+      },
+      {
+        path: 'write',
+        component: () => import('@/views/articles/write'),
+        meta: { title: '添加新闻赛事'},
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/banners',
+    component: Layout,
+    redirect: '/banners/index',
+    meta: { title: '广告管理', icon: 'el-icon-document' },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/banners/index'),
+        name: 'banners',
+        meta: { title: '广告列表'}
+      },
+      {
+        path: 'write/:id',
+        component: () => import('@/views/banners/write'),
+        meta: { title: '编辑广告'},
+        hidden: true
+      },
+      {
+        path: 'write',
+        component: () => import('@/views/banners/write'),
+        meta: { title: '添加广告'},
+        hidden: true
+      }
+    ]
+  },
+  {
     path: '/configs',
     component: Layout,
     redirect: '/configs/user-term',

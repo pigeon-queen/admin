@@ -1,5 +1,5 @@
 module.exports = {
-  title: '信鸽网站管理后台',
+  title: '赛鸽女王网站管理后台',
 
   /**
    * @type {boolean} true | false
@@ -23,7 +23,7 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
-  sidebarLogo: false,
+  sidebarLogo: true,
 
   /**
    * @type {string | array} 'production' | ['production', 'development']
