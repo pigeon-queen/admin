@@ -24,7 +24,7 @@
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row.id)" type="text" size="small">查看</el-button>
             <el-button type="text" size="small" @click="jumpWrite(scope.row.id)" v-if="!home">编辑</el-button>
-            <el-button @click="handleClick(scope.row.id)" type="text" size="small">竞标记录</el-button>
+            <el-button @click="loadPrices(scope.row.id)" type="text" size="small">竞标记录</el-button>
           </template>
         </el-table-column>
 
@@ -46,7 +46,7 @@
       <br>
       <div v-html="detail.content"></div>
       <el-row :gutter="20">
-        <el-col :span="6" v-for="pigeon in detail.pigeon_list">
+        <el-col :span="6" :key="pigeon.id" v-for="pigeon in detail.pigeon_list">
           <el-card>
             <oss-image v-model="pigeon.main_image" :width="128" style="width: 100%" alt=""/>
             <small style="color: grey">{{pigeon.sn}}</small>
@@ -55,11 +55,20 @@
         </el-col>
       </el-row>
     </el-dialog>
+
+    <el-dialog :visible.sync="priceDialog" title="竞标记录">
+      <el-table :data="prices" style="width: 100%" size="small">
+        <el-table-column prop="username" label="用户"></el-table-column>
+        <el-table-column prop="price" label="出价"></el-table-column>
+        <el-table-column prop="pigeon" min-width="256" label="鸽子"></el-table-column>
+        <el-table-column prop="created_at" label="出价时间"></el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import {auctions, detail, edit} from "@/api/auctions";
+import {auctions, detail, edit, prices} from "@/api/auctions";
 import OssImage from "@/components/OssImg/index";
 
 export default {
@@ -107,6 +116,10 @@ export default {
       this.loadData({
         page: i
       })
+    },
+    loadPrices(id) {
+      this.priceDialog = true;
+      prices(id).then(res => this.prices = res.data)
     }
   },
   data() {
@@ -116,7 +129,9 @@ export default {
       detail: {
         profile: {}
       },
-      page: {}
+      page: {},
+      prices: [],
+      priceDialog: false
     };
   },
   mounted() {

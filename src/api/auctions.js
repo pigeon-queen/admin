@@ -23,6 +23,13 @@ export function detail(id) {
   })
 }
 
+export function prices(id) {
+  return request({
+    url: '/auctions/' + id + '/prices',
+    method: 'get'
+  })
+}
+
 export function edit(id, data) {
   return request({
     url: '/auctions/' + id,
