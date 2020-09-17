@@ -31,6 +31,10 @@
               <quill v-model="post.content" ></quill>
             </el-form-item>
 
+            <el-form-item label="视频" style="display: inline-block" class="post-content" prop="content">
+              <video-upload v-model="post.video" ></video-upload>
+            </el-form-item>
+
             <el-divider></el-divider>
             <h3 style="text-align: center">选择鸽子</h3>
             <el-form-item label-width="0">
@@ -60,10 +64,11 @@ import {write, detail} from '@/api/auctions'
 import {sellers} from '@/api/seller'
 import {Message} from "element-ui";
 import PigeonList from "@/views/auctions/pigeonList";
+import VideoUpload from "@/components/Uploads/Video";
 
 export default {
   name: "write",
-  components: {PigeonList, Quill, ImageUpload},
+  components: {VideoUpload, PigeonList, Quill, ImageUpload},
   data() {
     return {
       post : {

@@ -33,13 +33,13 @@
             <el-form-item label="名称*" prop="name">
               <el-input v-model="post.name" style="width: 50%"></el-input>
             </el-form-item>
-            <el-form-item label="提供者*" prop="name">
-              <el-input v-model="post.provider" style="width: 50%"></el-input>
-            </el-form-item>
-            <el-form-item label="作育人*" prop="name">
-              <el-input v-model="post.breeder" style="width: 50%"></el-input>
-            </el-form-item>
-            <el-form-item label="简介" style="display: inline-block" class="post-summary" prop="summary">
+<!--            <el-form-item label="提供者*" prop="name">-->
+<!--              <el-input v-model="post.provider" style="width: 50%"></el-input>-->
+<!--            </el-form-item>-->
+<!--            <el-form-item label="作育人*" prop="name">-->
+<!--              <el-input v-model="post.breeder" style="width: 50%"></el-input>-->
+<!--            </el-form-item>-->
+            <el-form-item label="成绩" style="display: inline-block" class="post-summary" prop="summary">
               <quill v-model="post.summary"></quill>
             </el-form-item>
             <el-row :gutter="0" style="margin-top: 10px">

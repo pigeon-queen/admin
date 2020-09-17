@@ -53,6 +53,7 @@ import Quill from "@/components/Editor/quill";
 import {write, detail, categories} from '@/api/articles'
 import {Message} from "element-ui";
 import ImageUpload from "@/components/Uploads/Image";
+import {dateFormat} from "@/utils/date";
 
 export default {
   name: "write",
@@ -60,7 +61,7 @@ export default {
   data() {
     return {
       post : {
-        publish_at: new Date()
+        publish_at: dateFormat('yyyy-mm-dd HH:MM:ss')
       },
       rules: {
         name: [{ required: true, trigger: 'blur'}],

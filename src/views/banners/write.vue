@@ -72,7 +72,7 @@
     </el-row>
 
     <el-dialog :visible.sync="auctionDialog">
-      <el-table ref="listTable" v-loading="loading" :data="auctionList" style="width: 100%" border>
+      <el-table ref="listTable" :data="auctionList" style="width: 100%" border>
         <el-table-column prop="title" label="名称" min-width="128"></el-table-column>
         <el-table-column prop="end_at" label="结束时间"></el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
@@ -93,7 +93,7 @@
     </el-dialog>
 
     <el-dialog :visible.sync="articleDialog">
-      <el-table ref="listTable" v-loading="loading" :data="articleList" style="width: 100%" border>
+      <el-table ref="listTable" :data="articleList" style="width: 100%" border>
         <el-table-column prop="title" label="名称" min-width="128"></el-table-column>
         <el-table-column prop="category" label="类型"></el-table-column>
         <el-table-column prop="publish_at" label="发布时间"></el-table-column>
@@ -124,6 +124,7 @@ import {auctions} from '@/api/auctions'
 import {articles} from '@/api/articles'
 import {Message} from "element-ui";
 import ImageUpload from "@/components/Uploads/Image";
+import {dateFormat} from "@/utils/date";
 
 export default {
   name: "write",
@@ -131,7 +132,7 @@ export default {
   data() {
     return {
       post: {
-        publish_at: new Date(),
+        publish_at: dateFormat('yyyy-mm-dd HH:MM:ss'),
         relate_type: 'none',
         position: 0
       },

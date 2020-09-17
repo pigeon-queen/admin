@@ -1,24 +1,22 @@
 <template>
-  <div>
+  <div class="video-upload">
+    <video :src="url" v-if="url"  controls="controls"></video>
+    <el-progress
+      :percentage="imgProgress"
+      v-if="imgUploading"
+      :show-text="false"
+      class="video-progress"
+    >
+    </el-progress>
     <el-button :class="elClass" @click="trigger">
-      <i class="el-icon-plus"></i>
-      <input accept="image/*" type="file" style="display: none;" ref="upload" @change="upload">
-      <el-progress
-        :percentage="imgProgress"
-        v-if="imgUploading"
-        type="circle"
-        :show-text="false"
-        class="image-progress"
-      >
-      </el-progress>
-      <el-image
-        style="width: 100px; height: 100px"
-        :src="url"
-        fit="cover" class="image-preview" v-if="url"></el-image>
+      上传
+      <input accept="video/*" type="file" style="display: none;" ref="upload" @change="upload">
     </el-button>
-    <el-button circle @click="remove">
-      <i class="el-icon-delete" style="color: red"></i>
-    </el-button>
+    <el-tooltip class="item" effect="dark" content="移除" placement="top">
+      <el-button circle @click="remove" v-if="url">
+        <i class="el-icon-delete" style="color: red"></i>
+      </el-button>
+    </el-tooltip>
   </div>
 </template>
 
@@ -27,12 +25,12 @@ import {upload, UploadFile} from 'nerio-uploader'
 import {Message} from "element-ui";
 
 export default {
-  name: "ImageUpload",
+  name: "VideoUpload",
   props: {
     value: String,
     elClass: {
       type: String,
-      default: () => 'image-upload'
+      default: () => 'upload-button'
     },
   },
   data() {
@@ -57,13 +55,10 @@ export default {
       if (file) {
         upload(file, this.uploadDriver, {
           validate: (uploadFile) => {
-            if (!uploadFile.isImage()) {
+            if (!uploadFile.isVideo()) {
               return false;
             }
-            if (!uploadFile.notExceeding(10 * UploadFile.MB)) {
-              uploadFile.invalidFileMessage = '图片大小不能超过10M';
-              return false;
-            }
+
             return true;
           },
           stsUrl: '/oss/sts',
@@ -105,23 +100,14 @@ export default {
 </script>
 
 <style scoped lang="sass">
-.image-upload
-  width: 128px
-  height: 128px
-  position: relative
-
-.image-progress
-  position: absolute
-  top: 0
-  left: 0
-  width: 100%
-  height: 100%
-
-.image-preview
-  position: absolute
-  top: 50%
-  left: 50%
-  transform: translate(-50%, -50%)
-  width: 100%
-  height: 100%
+.video-upload
+  width: 360px
+  video
+    display: block
+    width: 360px
+    background-color: #898995
+    margin-bottom: 10px
+    border-radius: 6px
+  .upload-button
+    margin-top: 10px
 </style>
