@@ -190,6 +190,32 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/goods',
+    component: Layout,
+    redirect: '/goods/index',
+    meta: { title: '展售商品管理', icon: 'el-icon-s-goods' },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/goods/index'),
+        name: 'goods',
+        meta: { title: '展售商品列表'}
+      },
+      {
+        path: 'write/:id',
+        component: () => import('@/views/goods/write'),
+        meta: { title: '编辑展售商品'},
+        hidden: true
+      },
+      {
+        path: 'write',
+        component: () => import('@/views/goods/write'),
+        meta: { title: '添加展售商品'},
+        hidden: true
+      }
+    ]
+  },
+  {
     path: '/banners',
     component: Layout,
     redirect: '/banners/index',

@@ -7,7 +7,7 @@
       </div>
       <el-table :data="list" style="width: 100%" :row-class-name="tableRowClassName" border>
         <el-table-column prop="id" label="序号"></el-table-column>
-        <el-table-column prop="sn" label="编号"></el-table-column>
+        <el-table-column prop="sn" label="环号"></el-table-column>
         <el-table-column prop="name" label="名称"></el-table-column>
         <el-table-column prop="seller_name" label="鸽舍"></el-table-column>
         <el-table-column prop="disabled" label="启用">

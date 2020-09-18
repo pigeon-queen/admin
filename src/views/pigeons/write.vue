@@ -9,7 +9,7 @@
           </div>
           <el-form ref="form" :model="post"  label-width="72px" >
             <h3 style="text-align: center">基本信息</h3>
-            <el-form-item label="编号*">
+            <el-form-item label="环号*">
               <el-input v-model="post.sn" style="width: 50%"></el-input>
             </el-form-item>
 
@@ -23,7 +23,7 @@
                 <el-option
                   v-for="item in sellers"
                   :key="item.id"
-                  :label="item.name"
+                  :label="`${item.name}`"
                   :value="item.id">
                 </el-option>
               </el-select>
@@ -33,17 +33,17 @@
             <el-form-item label="名称*" prop="name">
               <el-input v-model="post.name" style="width: 50%"></el-input>
             </el-form-item>
-<!--            <el-form-item label="提供者*" prop="name">-->
-<!--              <el-input v-model="post.provider" style="width: 50%"></el-input>-->
-<!--            </el-form-item>-->
-<!--            <el-form-item label="作育人*" prop="name">-->
-<!--              <el-input v-model="post.breeder" style="width: 50%"></el-input>-->
-<!--            </el-form-item>-->
+            <el-form-item label="提供者" prop="name">
+              <el-input v-model="post.provider" style="width: 50%"></el-input>
+            </el-form-item>
+            <el-form-item label="作育人" prop="name">
+              <el-input v-model="post.breeder" style="width: 50%"></el-input>
+            </el-form-item>
             <el-form-item label="简介"  class="post-summary" prop="summary">
               <el-input type="textarea" style="width: 50%" v-model="post.summary"/>
             </el-form-item>
-            <el-form-item label="成绩"  class="post-summary" prop="summary">
-              <el-input type="textarea" style="width: 50%" v-model="post.honor"/>
+            <el-form-item label="成绩" style="display: inline-block"  class="post-summary" prop="summary">
+              <quill  v-model="post.honor"/>
             </el-form-item>
             <el-row :gutter="0" style="margin-top: 10px">
               <el-col :span="8">
@@ -67,6 +67,9 @@
                 </el-form-item>
               </el-col>
             </el-row>
+            <el-form-item label="关系表" style="display: inline-block"  class="post-summary" prop="summary">
+              <quill v-model="post.relation_table"/>
+            </el-form-item>
             <el-divider></el-divider>
             <h3 style="text-align: center">详细信息</h3>
             <h4 style="text-align: center;color: grey">>特征<</h4>
