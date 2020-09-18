@@ -7,7 +7,12 @@
       </div>
       <el-table :data="list" style="width: 100%" :row-class-name="tableRowClassName" border>
         <el-table-column prop="id" label="序号"></el-table-column>
-        <el-table-column prop="name" label="名称"></el-table-column>
+        <el-table-column prop="name" label="英文名"></el-table-column>
+        <el-table-column prop="cn_name" label="中文名"></el-table-column>
+        <el-table-column prop="nationality" label="国籍"></el-table-column>
+        <el-table-column prop="region" label="地区"></el-table-column>
+        <el-table-column prop="honor" label="荣誉"></el-table-column>
+        <el-table-column prop="main_lineage" label="主要血统"></el-table-column>
         <el-table-column prop="disabled" label="启用">
          <template slot-scope="scope">
            <el-switch
@@ -31,7 +36,7 @@
         @current-change="loadPage">
       </el-pagination>
     </el-card>
-    <el-dialog :visible.sync="dialog" :title="detail.name">
+    <el-dialog :visible.sync="dialog" :title="`${detail.cn_name}(${detail.name})`">
       <img :src="detail.main_image" alt="">
       <small v-html="detail.summary"></small>
       <br>

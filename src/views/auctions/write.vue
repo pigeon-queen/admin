@@ -23,8 +23,8 @@
                 placeholder="选择结束时间">
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="简介" style="display: inline-block" class="post-summary" prop="summary">
-              <quill v-model="post.summary"></quill>
+            <el-form-item label="简介" style="width: 85%" class="post-summary" prop="summary">
+              <el-input v-model="post.summary" type="textarea" style="width: 60%"></el-input>
             </el-form-item>
 
             <el-form-item label="描述" style="display: inline-block" class="post-content" prop="content">

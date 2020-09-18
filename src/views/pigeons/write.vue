@@ -39,8 +39,11 @@
 <!--            <el-form-item label="作育人*" prop="name">-->
 <!--              <el-input v-model="post.breeder" style="width: 50%"></el-input>-->
 <!--            </el-form-item>-->
-            <el-form-item label="成绩" style="display: inline-block" class="post-summary" prop="summary">
-              <quill v-model="post.summary"></quill>
+            <el-form-item label="简介"  class="post-summary" prop="summary">
+              <el-input type="textarea" style="width: 50%" v-model="post.summary"/>
+            </el-form-item>
+            <el-form-item label="成绩"  class="post-summary" prop="summary">
+              <el-input type="textarea" style="width: 50%" v-model="post.honor"/>
             </el-form-item>
             <el-row :gutter="0" style="margin-top: 10px">
               <el-col :span="8">

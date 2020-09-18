@@ -64,9 +64,7 @@
         </button>
         <input accept="image/*" type="file" style="display: none;" ref="upload" @change="upload">
           <el-progress
-            :size="26"
-            :width="5"
-            :rotate="-90"
+            :width="24"
             color="lime"
             class="progress"
             :percentage="imgProgress"
@@ -75,6 +73,22 @@
             :show-text="false"
           >
           </el-progress>
+      </span>
+      <span class="ql-formats upload-video" style="position: relative;">
+        <el-button style="width: 24px;height: 24px" @click="$refs.uploadVideo.click()">
+          <svg-icon icon-class="video" />
+        </el-button>
+        <input accept="video/*" type="file" style="display: none;" ref="uploadVideo" @change="uploadVideo">
+        <el-progress
+          :width="24"
+          color="lime"
+          class="progress"
+          :percentage="videoProgress"
+          type="circle"
+          :show-text="false"
+          v-if="videoUploading"
+        >
+      </el-progress>
       </span>
     </div>
   </quill-editor>
@@ -85,9 +99,13 @@
   import { upload, UploadFile } from 'nerio-uploader'
   import { functions } from 'nerio-js-utils'
   import ImageResize from '@/lib/quill-image-resize/src/ImageResize'
+  // import VideoResize  from '@/lib/quill-video-resize/src/VideoResize'
+  // import Video  from './formats/video'
   import Quill from 'quill'
 
   Quill.register('modules/imageResize', ImageResize)
+  // Quill.register('modules/videoResize', VideoResize)
+  // Quill.register('formats/myVideo', Video)
 
   const {fastRandom} = functions
 
@@ -105,6 +123,7 @@
         uploadDriver : process.env.VUE_APP_UPLOAD_DRIVER || 'oss',
         quill: null,
         imgProgress: -1,
+        videoProgress: -1,
       };
     },
     components: {quillEditor},
@@ -131,7 +150,7 @@
             },
             stsUrl: '/oss/sts',
             progress: percent => {
-              console.log(this.imgProgress = percent)
+              this.imgProgress = percent
             },
             chunk: true,
             chunkSize: 256 * UploadFile.KB
@@ -145,6 +164,30 @@
           })
         }
       },
+      uploadVideo(e) {
+        let file = e.target.files[0]
+        if (file) {
+          upload(file, this.uploadDriver, {
+            validate: (uploadFile) => {
+              return uploadFile.isVideo();
+            },
+            stsUrl: '/oss/sts',
+            progress: percent => {
+              this.videoProgress = percent
+              console.log(percent)
+            },
+            chunk: true,
+            chunkSize: 256 * UploadFile.KB
+          }).then(file => {
+            let url = file.url.split('?', 2)[0]
+            if (this.quill) {
+              let range = this.quill.getSelection();
+              this.quill.insertEmbed(range !== null ? range.index : 0, 'video', url, 'user')
+            }
+            this.videoProgress = -1
+          })
+        }
+      }
     },
     mounted() {
       this.quill = this.$refs.editor.quill
@@ -162,6 +205,9 @@
       imgUploading(){
         return this.imgProgress > -1 && this.imgProgress < 100
       },
+      videoUploading(){
+        return this.videoProgress > -1 && this.videoProgress < 100
+      },
       editorToolbar(){
         return 'editor-toolbar-' + fastRandom()
       },
@@ -177,15 +223,25 @@
         }
       }
     },
-  };
+  }
 </script>
 <style lang="sass" scoped>
   .upload-img
     position: relative
     .progress
       position: absolute
-      left: 1px
-      top: -1px
+      left: 2px
       background-color: rgba(161, 161, 161, 0.43)
       border-radius: 100%
+  .upload-video
+    .el-progress
+      position: absolute
+      left: 0
+    button
+      svg
+        fill: black
+      &:hover svg
+        fill: #6767f4
+      &:active
+        border: none
 </style>
