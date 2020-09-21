@@ -3,24 +3,21 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>拍卖订单列表</span>
-        <el-button style="float: right; padding: 3px 0" type="text" @click="jumpWrite()">添加</el-button>
       </div>
       <el-table :data="list" style="width: 100%" :row-class-name="tableRowClassName" border>
         <el-table-column prop="id" label="序号"></el-table-column>
-        <el-table-column prop="sn" label="编号"></el-table-column>
-        <el-table-column prop="name" label="名称"></el-table-column>
-        <el-table-column prop="seller_name" label="鸽舍"></el-table-column>
-        <el-table-column prop="disabled" label="启用">
-         <template slot-scope="scope">
-           <el-switch
-             v-model="scope.row.enabled" @change="switchDisable(scope.row)">
-           </el-switch>
-         </template>
-        </el-table-column>
+        <el-table-column prop="order_no" label="订单号"></el-table-column>
+        <el-table-column prop="username" label="用户"></el-table-column>
+        <el-table-column prop="title" label="拍卖"></el-table-column>
+        <el-table-column prop="name" label="鸽子"></el-table-column>
+        <el-table-column prop="price" label="成交价格"></el-table-column>
+        <el-table-column prop="base_price" label="拍卖底价"></el-table-column>
+        <el-table-column prop="status_cn" label="状态"></el-table-column>
+
         <el-table-column fixed="right" label="操作" width="100">
-          <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row.id)" type="text" size="small">查看</el-button>
-            <el-button type="text" size="small" @click="jumpWrite(scope.row.id)">编辑</el-button>
+          <template slot-scope="{row}">
+            <el-button  type="text" v-if="row.status === 1" @click="deliver(row.id)" size="small">确认发货</el-button>
+            <el-button  type="text" v-if="row.status === 2" @click="deliverStatuses(row.id)" size="small">查看发货状态</el-button>
           </template>
         </el-table-column>
 
@@ -34,110 +31,26 @@
         @current-change="loadPage">
       </el-pagination>
     </el-card>
-    <el-dialog :visible.sync="dialog" >
-      <template slot="title">
-        <div style="font-size: 26px">{{ detail.name }}</div>
-        <small style="color: grey">{{detail.sn}}</small>
-      </template>
-      <small v-html="detail.summary"></small>
-      <br>
-      <br>
-      <table class="profile"  cellspacing="0" cellpadding="0">
-        <thead>
-        <tr><th style="text-align: center" rowspan="2"> 特征</th></tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>眼砂</td>
-          <td>{{ detail.eye_sand }}</td>
-          <td>羽色</td>
-          <td>{{ detail.feather_color }}</td>
-        </tr>
-        <tr>
-          <td>眼砂</td>
-          <td>{{ detail.distance_level }}</td>
-        </tr>
-        </tbody>
-      </table>
 
-      <table class="profile"  cellspacing="0" cellpadding="0">
-        <thead>
-        <tr><th style="text-align: center" rowspan="2"> 整体</th></tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>体型</td>
-          <td>{{ detail.profile.body_type }}</td>
-          <td>肥瘦</td>
-          <td>{{ detail.profile.body_fit }}</td>
-        </tr>
-        <tr>
-          <td>体长</td>
-          <td>{{ detail.profile.body_length }}</td>
-          <td>强壮度</td>
-          <td>{{ detail.profile.body_strong }}</td>
-        </tr>
-        <tr>
-          <td>耻骨强度</td>
-          <td>{{ detail.profile.pubic_strength }}</td>
-          <td>耻骨松紧</td>
-          <td>{{ detail.profile.pubic_tightness }}</td>
-        </tr>
-        <tr>
-          <td>活力</td>
-          <td>{{ detail.profile.vitality }}</td>
-          <td>眼睛浓度</td>
-          <td>{{ detail.profile.eye_concentration }}</td>
-        </tr>
-        <tr>
-          <td>肌肉</td>
-          <td>{{ detail.profile.muscle }}</td>
-          <td>平衡度</td>
-          <td>{{ detail.profile.balance }}</td>
-        </tr>
-        <tr>
-          <td>背部</td>
-          <td>{{ detail.profile.back }}</td>
-        </tr>
-        </tbody>
-      </table>
+    <deliver-select @submit="submitDeliver" :dialog.sync="deliverDialog" v-model="post.deliver_code" :type.sync="post.deliver_type"/>
 
-      <table class="profile"  cellspacing="0" cellpadding="0">
-        <thead>
-        <tr><th style="text-align: center" rowspan="2"> 翅膀</th></tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>育种羽</td>
-          <td>{{ detail.profile.breeding_feather }}</td>
-          <td>主羽</td>
-          <td>{{ detail.profile.main_feather }}</td>
-        </tr>
-        <tr>
-          <td>羽毛浓密度</td>
-          <td>{{ detail.profile.feather_density }}</td>
-          <td>羽质</td>
-          <td>{{ detail.profile.feather_quality }}</td>
-        </tr>
-        <tr>
-          <td>副羽</td>
-          <td>{{ detail.profile.accessory_feather }}</td>
-          <td>翅膀柔韧度</td>
-          <td>{{ detail.profile.wing_flexibility }}</td>
-        </tr>
-        </tbody>
-      </table>
-      <img :src="detail.main_image" />
-      <img :src="detail.lineage_image" />
+    <el-dialog :title="`订单${order.order_no}物流`" :visible.sync="deliverStatus">
+      <div v-for="s in order.deliver_statuses" :key="s.time" style="margin: 26px 0">
+        {{s.time}}
+        {{s.status}}
+      </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import {pigeons, detail, edit} from '@/api/pigeon'
+import {orders, deliver, order} from '@/api/auctions'
+import DeliverSelect from "@/components/Selects/deliver";
+import {Message} from "element-ui";
 
 export default {
-  name: "Sellers",
+  name: "AuctionOrders",
+  components: {DeliverSelect},
   methods: {
     tableRowClassName({ row, rowIndex }) {
       if (rowIndex === 1) {
@@ -147,20 +60,8 @@ export default {
       }
       return "";
     },
-    handleClick(id){
-      this.dialog = true
-      detail(id).then(res => this.detail = res.data)
-    },
-    switchDisable(row) {
-      edit(row.id, {
-        enabled: row.enabled
-      })
-    },
-    jumpWrite(id = ''){
-      this.$router.push(`/auctions/write/${id}`)
-    },
     loadData(params = {}){
-      pigeons(params).then(res => {
+      orders(params).then(res => {
         const {data} = res
         this.list = data.data
         this.page = data.meta
@@ -170,16 +71,38 @@ export default {
       this.loadData({
         page: i
       })
+    },
+    deliver(id) {
+      this.post.id = id
+      this.deliverDialog = true
+    },
+    submitDeliver(){
+      deliver(this.post.id, this.post).then(res => {
+        Message({
+          message: '保存成功',
+          type: 'info',
+          duration: 3 * 1000
+        })
+        this.deliverDialog = false
+        this.loadData()
+      })
+    },
+    deliverStatuses(id) {
+      this.deliverStatus = true
+      order(id).then(res => this.order = res.data)
     }
   },
   data() {
     return {
       list: [],
-      dialog: false,
-      detail: {
-        profile: {}
+      deliverDialog: false,
+      deliverStatus: false,
+      order: {
       },
-      page: {}
+      page: {},
+      post: {
+
+      }
     };
   },
   mounted() {

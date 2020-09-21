@@ -33,6 +33,12 @@
             <el-form-item label="名称*" prop="name">
               <el-input v-model="post.name" style="width: 50%"></el-input>
             </el-form-item>
+            <el-form-item label="父亲" prop="name">
+              <pigeons-select v-model="post.father_id" :query="{excepts: relateExcepts, gender: 'M'}" title="选择父亲" :hint.sync="post.father_name"/>
+            </el-form-item>
+            <el-form-item label="母亲" prop="name">
+              <pigeons-select v-model="post.mother_id" :query="{excepts: relateExcepts, gender: 'F'}" title="选择母亲"  :hint.sync="post.mother_name"/>
+            </el-form-item>
             <el-form-item label="提供者" prop="name">
               <el-input v-model="post.provider" style="width: 50%"></el-input>
             </el-form-item>
@@ -221,10 +227,11 @@ import ImageUpload from "@/components/Uploads/Image";
 import {write, detail} from '@/api/pigeon'
 import {sellers} from '@/api/seller'
 import {Message} from "element-ui";
+import PigeonsSelect from "@/components/Selects/pigeons";
 
 export default {
   name: "write",
-  components: {Quill, ImageUpload},
+  components: {PigeonsSelect, Quill, ImageUpload},
   data() {
     return {
       post : {
@@ -271,6 +278,9 @@ export default {
     },
     title() {
       return ``
+    },
+    relateExcepts(){
+      return this.id
     }
   },
   mounted() {

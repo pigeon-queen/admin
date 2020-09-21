@@ -14,3 +14,10 @@ export function getMeta(key) {
     method: 'get',
   })
 }
+
+export function delivers() {
+  return request({
+    url: '/metas/delivers',
+    method: 'get',
+  })
+}

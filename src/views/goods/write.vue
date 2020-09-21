@@ -20,8 +20,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="关联鸽子" v-if="post.saleable_type === 'pigeon'">
-          <el-button @click="loadPigeons">选择鸽子</el-button>
-          <span style="padding-left: 10px">{{post.relate_title}}</span>
+          <pigeons-select v-model="post.saleable_id" :hint.sync="post.relate_title"/>
         </el-form-item>
 
         <template v-if="post.saleable_type === 'product'">
@@ -49,26 +48,6 @@
         </el-form-item>
       </el-form>
     </el-card>
-    <el-dialog :visible.sync="pigeonDialog">
-      <el-table ref="listTable" :data="pigeonList" style="width: 100%" border>
-        <el-table-column prop="name" label="名称" min-width="128"></el-table-column>
-        <el-table-column prop="sn" label="环号" min-width="128"></el-table-column>
-        <el-table-column fixed="right" label="操作" width="100">
-          <template slot-scope="{row}">
-            <el-button @click="choosePigeon(row)" type="primary" size="small">选择</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <el-pagination
-        v-if="pigeonPage.total"
-        layout="prev, pager, next"
-        :total="pigeonPage.total"
-        :page-size="pigeonPage.per_page"
-        :current-page="pigeonPage.current_page"
-        @current-change="loadPigeonPage">
-      </el-pagination>
-    </el-dialog>
   </div>
 </template>
 
@@ -76,13 +55,13 @@
 import Quill from "@/components/Editor/quill";
 
 import {write, detail} from '@/api/goods'
-import {pigeons} from '@/api/pigeon'
 import {Message} from "element-ui";
 import ImageUpload from "@/components/Uploads/Image";
+import PigeonsSelect from "@/components/Selects/pigeons";
 
 export default {
   name: "write",
-  components: {ImageUpload, Quill},
+  components: {PigeonsSelect, ImageUpload, Quill},
   data() {
     return {
       post : {
@@ -103,9 +82,6 @@ export default {
           name: "鸽药"
         }
       ],
-      pigeonList: [],
-      pigeonPage: {},
-      pigeonDialog: false,
     }
   },
   methods: {
@@ -127,23 +103,6 @@ export default {
           return false;
         }
       });
-    },
-    loadPigeons(params = {}){
-      this.pigeonDialog = true
-      params.started = 1
-      params.enabled = 1
-      pigeons(params).then(res => {
-        this.pigeonList = res.data.data
-        this.pigeonPage = res.data.meta
-      })
-    },
-    choosePigeon(row) {
-      this.post.saleable_id = row.id
-      this.post.relate_title = `${row.name}(${row.sn})`
-      this.pigeonDialog = false
-    },
-    loadPigeonPage(page){
-      this.loadPigeons({page})
     }
   },
   computed: {

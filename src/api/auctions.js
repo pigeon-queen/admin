@@ -30,6 +30,28 @@ export function prices(id) {
   })
 }
 
+export function orders() {
+  return request({
+    url: '/auctions/orders',
+    method: 'get'
+  })
+}
+
+export function order(id) {
+  return request({
+    url: '/auctions/orders/'+id,
+    method: 'get'
+  })
+}
+
+export function deliver(id, data) {
+  return request({
+    url: '/auctions/orders/' + id + '/deliver',
+    method: 'post',
+    data
+  })
+}
+
 export function edit(id, data) {
   return request({
     url: '/auctions/' + id,

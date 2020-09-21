@@ -100,12 +100,12 @@ export default {
       if (this.selected.length === 0 ) {
         this.selected = data
       } else {
+        let ids = this.selected.map(s => s.id)
+
         data.forEach(i => {
-          this.selected.forEach(s => {
-            if (i.id !== s.id) {
-              this.selected.push(i)
-            }
-          })
+          if (ids.indexOf(i.id) < 0) {
+            this.selected.push(i)
+          }
         })
       }
     },
