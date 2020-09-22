@@ -19,9 +19,19 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="关联鸽子" v-if="post.saleable_type === 'pigeon'">
-          <pigeons-select v-model="post.saleable_id" :hint.sync="post.relate_title"/>
-        </el-form-item>
+        <template v-if="post.saleable_type === 'pigeon'">
+          <el-form-item label="关联鸽子" >
+            <pigeons-select v-model="post.saleable_id" :hint.sync="post.relate_title"/>
+          </el-form-item>
+          <el-form-item label="结束时间*">
+            <el-date-picker
+              v-model="post.end_at"
+              type="datetime"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              placeholder="选择结束时间">
+            </el-date-picker>
+          </el-form-item>
+        </template>
 
         <template v-if="post.saleable_type === 'product'">
           <el-form-item label="名称*">

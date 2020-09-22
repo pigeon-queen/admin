@@ -242,10 +242,35 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/notices',
+    component: Layout,
+    redirect: '/notices/index',
+    meta: { title: '通知管理', icon: 'el-icon-document' },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/notices/index'),
+        meta: { title: '通知列表'}
+      },
+      {
+        path: 'write/:id',
+        component: () => import('@/views/notices/write'),
+        meta: { title: '编辑通知'},
+        hidden: true
+      },
+      {
+        path: 'write',
+        component: () => import('@/views/notices/write'),
+        meta: { title: '添加通知'},
+        hidden: true
+      },
+    ]
+  },
+  {
     path: '/configs',
     component: Layout,
     redirect: '/configs/user-term',
-    meta: { title: '系统配置', icon: 'el-icon-s-tools', affix: true },
+    meta: { title: '系统设置', icon: 'el-icon-s-tools', affix: true },
     children: [
       {
         path: 'user-term',

@@ -16,8 +16,8 @@
 
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="{row}">
-            <el-button  type="text" v-if="row.status === 1" @click="deliver(row.id)" size="small">确认发货</el-button>
-            <el-button  type="text" v-if="row.status === 2" @click="deliverStatuses(row.id)" size="small">查看发货状态</el-button>
+            <el-button  type="text" v-if="row.status === 2" @click="deliver(row.id)" size="small">确认发货</el-button>
+            <el-button  type="text" v-if="row.status === 3" @click="deliverStatuses(row.id)" size="small">查看发货状态</el-button>
           </template>
         </el-table-column>
 
