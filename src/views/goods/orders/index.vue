@@ -2,22 +2,19 @@
   <div class="app-container">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>拍卖订单列表</span>
+        <span>商品订单列表</span>
       </div>
       <el-table :data="list" style="width: 100%" :row-class-name="tableRowClassName" border>
         <el-table-column prop="id" label="序号"></el-table-column>
         <el-table-column prop="order_no" label="订单号"></el-table-column>
         <el-table-column prop="username" label="用户">
           <template slot-scope="{row}">
-            <span class="link-like" @click="userDialog = true; (user = row.user)">{{ row.username }}</span>
+            <span class="link-like" @click="userDialog = true; (user = row.user)">{{ row.user.username }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="title" label="拍卖"></el-table-column>
-        <el-table-column prop="name" label="鸽子"></el-table-column>
-        <el-table-column prop="price" label="成交价格"></el-table-column>
-        <el-table-column prop="base_price" label="拍卖底价"></el-table-column>
+        <el-table-column prop="amount" label="数量"></el-table-column>
+        <el-table-column prop="price" label="价格"></el-table-column>
         <el-table-column prop="status_cn" label="状态"></el-table-column>
-
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="{row}">
             <el-button  type="text" v-if="row.status === 2" @click="deliver(row.id)" size="small">确认发货</el-button>
@@ -64,12 +61,12 @@
 </template>
 
 <script>
-import {orders, deliver, order} from '@/api/auctions'
+import {orders, deliver, order} from '@/api/goods'
 import DeliverSelect from "@/components/Selects/deliver";
 import {Message} from "element-ui";
 
 export default {
-  name: "AuctionOrders",
+  name: "GoodsOrders",
   components: {DeliverSelect},
   methods: {
     tableRowClassName({ row, rowIndex }) {

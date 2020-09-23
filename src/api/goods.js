@@ -34,3 +34,26 @@ export function write(data) {
   })
 }
 
+export function order(id) {
+  return request({
+    url: '/goods/orders/' + id,
+    method: 'get'
+  })
+}
+
+export function deliver(id, data) {
+  return request({
+    url: '/goods/orders/' + id + '/deliver',
+    method: 'post',
+    data
+  })
+}
+
+export function orders(params = {}) {
+  return request({
+    url: '/goods/orders',
+    method: 'get',
+    params
+  })
+}
+

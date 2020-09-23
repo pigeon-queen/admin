@@ -80,6 +80,20 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/accounts',
+    component: Layout,
+    redirect: '/accounts/index',
+    meta: { title: '用户管理', icon: 'peoples', affix: true },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/accounts/index'),
+        name: 'accounts',
+        meta: { title: '用户列表'}
+      }
+    ]
+  },
+  {
     path: '/sellers',
     component: Layout,
     redirect: '/sellers/index',
@@ -212,7 +226,13 @@ export const constantRoutes = [
         component: () => import('@/views/goods/write'),
         meta: { title: '添加展售商品'},
         hidden: true
-      }
+      },
+      {
+        path: 'orders',
+        component: () => import('@/views/goods/orders/index'),
+        name: 'goods-orders',
+        meta: { title: '订单列表'}
+      },
     ]
   },
   {
@@ -245,7 +265,7 @@ export const constantRoutes = [
     path: '/notices',
     component: Layout,
     redirect: '/notices/index',
-    meta: { title: '通知管理', icon: 'el-icon-document' },
+    meta: { title: '通知管理', icon: 'el-icon-message-solid' },
     children: [
       {
         path: 'index',
